@@ -177,7 +177,10 @@ workflow {
     // Hard variant filtration
     // -----------------------------------------------------------------------
 
-    ch_filter_input = ch_vcf.combine(ch_ref)
+    ch_filter_input = GATK_HAPLOTYPECALLER.out.gvcf
+        .join(GATK_HAPLOTYPECALLER.out.tbi)
+        .map { meta, vcf, tbi -> [ vcf, tbi ] }
+        .combine(ch_ref)
 
     GATK_VARIANTFILTRATION(ch_filter_input)
 
@@ -187,15 +190,13 @@ workflow {
 
     if (params.run_multiqc) {
         ch_qc = Channel.empty()
-            .mix(FASTQC_RAW.out.zip)
-            .mix(FASTQC_TRIMMED.out.zip)
-            .mix(TRIMMOMATIC.out.log)
-            .mix(SAMTOOLS_FLAGSTAT.out.flagstat)
-            .mix(PICARD_MARKDUPLICATES.out.metrics)
+            .mix(FASTQC_RAW.out.zip.map { meta, files -> files })
+            .mix(FASTQC_TRIMMED.out.zip.map { meta, files -> files })
+            .mix(TRIMMOMATIC.out.log.map { meta, log -> log })
+            .mix(SAMTOOLS_FLAGSTAT.out.flagstat.map { meta, file -> file })
+            .mix(PICARD_MARKDUPLICATES.out.metrics.map { meta, file -> file })
             .collect()
-
-        MULTIQC(ch_qc)
-    }
+	}
 }
 
 workflow.onComplete {

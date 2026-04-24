@@ -256,3 +256,19 @@ Reports:
 - [Pipeline execution report](https://g-Poulami.github.io/nf-gatk-pipeline/report.html)
 - [FastQC R1](https://g-Poulami.github.io/nf-gatk-pipeline/fastqc/test_R1_fastqc.html)
 - [FastQC R2](https://g-Poulami.github.io/nf-gatk-pipeline/fastqc/test_R2_fastqc.html)
+
+## Results
+
+Pipeline run on SRR062634 (100,000 reads, chr22 reference, GRCh38). BQSR skipped for test run.
+
+| Metric | Value |
+|--------|-------|
+| Total reads | 195,301 |
+| Mapped reads | 55,273 |
+| Mapping rate | 27.7% |
+
+Reports:
+- [Pipeline execution report](https://g-Poulami.github.io/nf-gatk-pipeline/report.html)
+- [Execution timeline](https://g-Poulami.github.io/nf-gatk-pipeline/timeline.html)
+- [FastQC R1](https://g-Poulami.github.io/nf-gatk-pipeline/fastqc/test_R1_fastqc.html)
+- [FastQC R2](https://g-Poulami.github.io/nf-gatk-pipeline/fastqc/test_R2_fastqc.html)
